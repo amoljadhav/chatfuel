@@ -55,35 +55,45 @@ public class HelloController {
 		
 		MessageBody messageBody = new MessageBody();
 		
-				try{
-					String authToken = oauthToken();
-					JSONObject response = getPolicyDetails(authToken,policyNumber);
-				  if(response!=null){
-					  PolicyDetailsModel policyDetails = new PolicyDetailsModel(response);
- 
-//					  ObjectMapper mapper = new ObjectMapper();
-//					
-//						PolicyDetailsModel policyDetails = mapper.readValue(response, PolicyDetailsModel.class);
+//				try{
+				//	String authToken = oauthToken();
+				//	JSONObject response = getPolicyDetails(authToken,policyNumber);
+//				  if(response!=null){
+//					  PolicyDetailsModel policyDetails = new PolicyDetailsModel(response);
+// 
+////					  ObjectMapper mapper = new ObjectMapper();
+////					
+////						PolicyDetailsModel policyDetails = mapper.readValue(response, PolicyDetailsModel.class);
+////						
+//						System.out.println(policyDetails.getAmount()+","+policyDetails.getAttributes().getType());
+////						
 //						
-						System.out.println(policyDetails.getAmount()+","+policyDetails.getAttributes().getType());
+//						List<TextMessages> tmList = new ArrayList<TextMessages>();
 //						
-						
-						List<TextMessages> tmList = new ArrayList<TextMessages>();
-						
-						TextMessages textMessage1 = new TextMessages();
-						textMessage1.setText("Total amount is: "+ policyDetails.getAmount());
-						
-						TextMessages textMessage2 = new TextMessages();
-						textMessage2.setText("Policy type is: "+ policyDetails.getAttributes().getType());
-							tmList.add(textMessage1);
-							tmList.add(textMessage2);
-							messageBody.setMessages(tmList);
-					}
-				}catch(IOException e){
-					e.printStackTrace();
-				}
+//						TextMessages textMessage1 = new TextMessages();
+//						textMessage1.setText("Total amount is: "+ policyDetails.getAmount());
+//						
+//						TextMessages textMessage2 = new TextMessages();
+//						textMessage2.setText("Policy type is: "+ policyDetails.getAttributes().getType());
+//							tmList.add(textMessage1);
+//							tmList.add(textMessage2);
+//							messageBody.setMessages(tmList);
+//					}
+//				}catch(IOException e){
+//					e.printStackTrace();
+//				}
 				
 		
+		TextMessages tm = new TextMessages();
+		tm.setText("hi zakaiter");
+		
+		TextMessages tm2 = new TextMessages();
+		tm2.setText("hey mohsin");
+		
+		List<TextMessages> tmList = new ArrayList<TextMessages>();
+		tmList.add(tm);
+		tmList.add(tm2);
+		messageBody.setMessages(tmList);
 		
 		return messageBody;
 	}
