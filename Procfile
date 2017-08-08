@@ -1,1 +1,1 @@
-web: java -jar target/chatfuelbotchat-1.0.1.jar --server.port=5000
+web: java -jar target/chatfuelbotchat-1.0.1.jar 
