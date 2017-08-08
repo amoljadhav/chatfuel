@@ -20,15 +20,12 @@ import org.apache.oltu.oauth2.client.URLConnectionClient;
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
 import org.apache.oltu.oauth2.client.response.OAuthJSONAccessTokenResponse;
 import org.apache.oltu.oauth2.common.message.types.GrantType;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 public class HelloController {
@@ -55,45 +52,45 @@ public class HelloController {
 		
 		MessageBody messageBody = new MessageBody();
 		
-//				try{
-				//	String authToken = oauthToken();
-				//	JSONObject response = getPolicyDetails(authToken,policyNumber);
-//				  if(response!=null){
-//					  PolicyDetailsModel policyDetails = new PolicyDetailsModel(response);
-// 
-////					  ObjectMapper mapper = new ObjectMapper();
-////					
-////						PolicyDetailsModel policyDetails = mapper.readValue(response, PolicyDetailsModel.class);
-////						
-//						System.out.println(policyDetails.getAmount()+","+policyDetails.getAttributes().getType());
-////						
+				try{
+					String authToken = oauthToken();
+					JSONObject response = getPolicyDetails(authToken,policyNumber);
+				  if(response!=null){
+					  PolicyDetailsModel policyDetails = new PolicyDetailsModel(response);
+ 
+//					  ObjectMapper mapper = new ObjectMapper();
+//					
+//						PolicyDetailsModel policyDetails = mapper.readValue(response, PolicyDetailsModel.class);
 //						
-//						List<TextMessages> tmList = new ArrayList<TextMessages>();
+						System.out.println(policyDetails.getAmount()+","+policyDetails.getAttributes().getType());
 //						
-//						TextMessages textMessage1 = new TextMessages();
-//						textMessage1.setText("Total amount is: "+ policyDetails.getAmount());
-//						
-//						TextMessages textMessage2 = new TextMessages();
-//						textMessage2.setText("Policy type is: "+ policyDetails.getAttributes().getType());
-//							tmList.add(textMessage1);
-//							tmList.add(textMessage2);
-//							messageBody.setMessages(tmList);
-//					}
-//				}catch(IOException e){
-//					e.printStackTrace();
-//				}
+						
+						List<TextMessages> tmList = new ArrayList<TextMessages>();
+						
+						TextMessages textMessage1 = new TextMessages();
+						textMessage1.setText("Total amount is: "+ policyDetails.getAmount());
+						
+						TextMessages textMessage2 = new TextMessages();
+						textMessage2.setText("Policy type is: "+ policyDetails.getAttributes().getType());
+							tmList.add(textMessage1);
+							tmList.add(textMessage2);
+							messageBody.setMessages(tmList);
+					}
+				}catch(IOException e){
+					e.printStackTrace();
+				}
 				
 		
-		TextMessages tm = new TextMessages();
-		tm.setText("hi zakaiter");
-		
-		TextMessages tm2 = new TextMessages();
-		tm2.setText("hey mohsin");
-		
-		List<TextMessages> tmList = new ArrayList<TextMessages>();
-		tmList.add(tm);
-		tmList.add(tm2);
-		messageBody.setMessages(tmList);
+//		TextMessages tm = new TextMessages();
+//		tm.setText("hi zakaiter");
+//		
+//		TextMessages tm2 = new TextMessages();
+//		tm2.setText("hey mohsin");
+//		
+//		List<TextMessages> tmList = new ArrayList<TextMessages>();
+//		tmList.add(tm);
+//		tmList.add(tm2);
+//		messageBody.setMessages(tmList);
 		
 		return messageBody;
 	}
