@@ -94,7 +94,7 @@ public class HelloController {
 
 			OAuthClientRequest request = OAuthClientRequest
 					.tokenLocation("https://ysurancedemo-dev-ed.my.salesforce.com/services/oauth2/token")
-					.setRedirectURI("https://www.getpostman.com/oauth2/callback").setGrantType(GrantType.PASSWORD)
+					.setRedirectURI("https://chatfuel1.herokuapp.com/callback").setGrantType(GrantType.PASSWORD)
 
 					.setClientId(
 							"3MVG9d8..z.hDcPL8Cc73Am729Id_dHpSGA5idrmc4gdH0LtXpe8p1Eew6jwE6T6yY5txmXRxQPQL0RjF8jjB")
