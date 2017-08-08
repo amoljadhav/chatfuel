@@ -1,0 +1,6 @@
+com\websystique\springboot\controller\HelloController.class
+com\websystique\springboot\controller\PolicyDetailsModel.class
+com\websystique\springboot\controller\AttributeType.class
+com\websystique\springboot\SpringBootStandAloneApp.class
+com\websystique\springboot\controller\TextMessages.class
+com\websystique\springboot\controller\MessageBody.class
