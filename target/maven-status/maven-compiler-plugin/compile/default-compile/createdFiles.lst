@@ -1,6 +1,6 @@
-com\websystique\springboot\controller\HelloController.class
-com\websystique\springboot\controller\PolicyDetailsModel.class
-com\websystique\springboot\controller\AttributeType.class
-com\websystique\springboot\SpringBootStandAloneApp.class
-com\websystique\springboot\controller\TextMessages.class
-com\websystique\springboot\controller\MessageBody.class
+chatfuel\dcx\springboot\controller\HelloController.class
+chatfuel\dcx\springboot\controller\TextMessages.class
+chatfuel\dcx\springboot\controller\MessageBody.class
+chatfuel\dcx\springboot\controller\AttributeType.class
+chatfuel\dcx\springboot\controller\PolicyDetailsModel.class
+chatfuel\dcx\springboot\SpringBootStandAloneApp.class

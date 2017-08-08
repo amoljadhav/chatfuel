@@ -1,1 +1,1 @@
-web: java -jar target/chatfuel-1.0.0.jar
+web: java -jar target/chatfuelbotchat-1.0.1.jar
