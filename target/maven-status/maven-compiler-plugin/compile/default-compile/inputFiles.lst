@@ -1,6 +1,6 @@
 D:\FACEBOOK\maven chatfuel\MohsinCG chatfuel\chatfuel\src\main\java\chatfuel\dcx\springboot\model\backend\data\ClaimDetailsModel.java
+D:\FACEBOOK\maven chatfuel\MohsinCG chatfuel\chatfuel\src\main\java\chatfuel\dcx\springboot\model\MultipleMessageAttachments.java
 D:\FACEBOOK\maven chatfuel\MohsinCG chatfuel\chatfuel\src\main\java\chatfuel\dcx\springboot\model\MessageBody.java
-D:\FACEBOOK\maven chatfuel\MohsinCG chatfuel\chatfuel\src\main\java\chatfuel\dcx\springboot\model\backend\data\MultiplePolicyDetails.java
 D:\FACEBOOK\maven chatfuel\MohsinCG chatfuel\chatfuel\src\main\java\chatfuel\dcx\springboot\model\SetAttributes.java
 D:\FACEBOOK\maven chatfuel\MohsinCG chatfuel\chatfuel\src\main\java\chatfuel\dcx\springboot\model\MessageAttachment.java
 D:\FACEBOOK\maven chatfuel\MohsinCG chatfuel\chatfuel\src\main\java\chatfuel\dcx\springboot\model\SetAttributesData.java
@@ -13,4 +13,6 @@ D:\FACEBOOK\maven chatfuel\MohsinCG chatfuel\chatfuel\src\main\java\chatfuel\dcx
 D:\FACEBOOK\maven chatfuel\MohsinCG chatfuel\chatfuel\src\main\java\chatfuel\dcx\springboot\model\Payload.java
 D:\FACEBOOK\maven chatfuel\MohsinCG chatfuel\chatfuel\src\main\java\chatfuel\dcx\springboot\model\TextMessages.java
 D:\FACEBOOK\maven chatfuel\MohsinCG chatfuel\chatfuel\src\main\java\chatfuel\dcx\springboot\controller\HelloController.java
+D:\FACEBOOK\maven chatfuel\MohsinCG chatfuel\chatfuel\src\main\java\chatfuel\dcx\springboot\utils\API_CONST.java
+D:\FACEBOOK\maven chatfuel\MohsinCG chatfuel\chatfuel\src\main\java\chatfuel\dcx\springboot\utils\Utils.java
 D:\FACEBOOK\maven chatfuel\MohsinCG chatfuel\chatfuel\src\main\java\chatfuel\dcx\springboot\model\backend\data\AttributeType.java

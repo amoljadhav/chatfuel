@@ -1,4 +1,5 @@
 chatfuel\dcx\springboot\model\backend\data\AttributeType.class
+chatfuel\dcx\springboot\utils\API_CONST.class
 chatfuel\dcx\springboot\model\MessageBody.class
 chatfuel\dcx\springboot\model\SetAttributes.class
 chatfuel\dcx\springboot\model\backend\data\PolicyDetailsModel.class
@@ -11,6 +12,7 @@ chatfuel\dcx\springboot\model\Attachment.class
 chatfuel\dcx\springboot\controller\HelloController.class
 chatfuel\dcx\springboot\model\Elements.class
 chatfuel\dcx\springboot\model\Payload.class
-chatfuel\dcx\springboot\model\backend\data\MultiplePolicyDetails.class
+chatfuel\dcx\springboot\utils\Utils.class
 chatfuel\dcx\springboot\model\SetAttributesData.class
 chatfuel\dcx\springboot\SpringBootStandAloneApp.class
+chatfuel\dcx\springboot\model\MultipleMessageAttachments.class
