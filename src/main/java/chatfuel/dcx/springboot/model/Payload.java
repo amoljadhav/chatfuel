@@ -5,7 +5,7 @@ public class Payload {
 	private String template_type = "button";
 
 	private String text;
-
+	
 	private Buttons[] buttons;
 	
 	public Payload(Buttons[] buttons, String text){
@@ -13,27 +13,30 @@ public class Payload {
 		this.buttons = buttons;
 	}
 
-	public String getTop_element_style() {
+
+	public String getTemplate_type() {
 		return template_type;
 	}
 
-	public void setTop_element_style(String template_type) {
+	public void setTemplate_type(String template_type) {
 		this.template_type = template_type;
 	}
 
-	public String getTemplate_type() {
+	public String getText() {
 		return text;
 	}
 
-	public void setTemplate_type(String text) {
+	public void setText(String text) {
 		this.text = text;
 	}
 
-	public Buttons[] getElements() {
+	public Buttons[] getButtons() {
 		return buttons;
 	}
 
-	public void setElements(Buttons[] buttons) {
+	public void setButtons(Buttons[] buttons) {
 		this.buttons = buttons;
 	}
+
+
 }

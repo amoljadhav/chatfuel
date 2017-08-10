@@ -1,7 +1,5 @@
 package chatfuel.dcx.springboot.model;
 
-import org.json.JSONObject;
-
 public class MessageAttachment {
 
 	private Attachment attachment;
