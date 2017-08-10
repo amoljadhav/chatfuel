@@ -64,7 +64,7 @@ public class SetAttributes {
 		messages = new TextMessages[5];
 
 		TextMessages tm1 = new TextMessages();
-		tm1.setText("Claim Number is " + claimDetailsModel.getName());
+		tm1.setText("Claim Name is " + claimDetailsModel.getName());
 
 		TextMessages tm2 = new TextMessages();
 		tm2.setText("Claim Id is " + claimDetailsModel.getId());
