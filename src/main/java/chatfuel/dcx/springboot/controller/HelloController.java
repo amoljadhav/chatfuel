@@ -3,8 +3,6 @@ package chatfuel.dcx.springboot.controller;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,7 +29,6 @@ import org.springframework.web.bind.annotation.RestController;
 import chatfuel.dcx.springboot.model.MessageBody;
 import chatfuel.dcx.springboot.model.SetAttributes;
 import chatfuel.dcx.springboot.model.SetAttributesData;
-import chatfuel.dcx.springboot.model.TextMessages;
 import chatfuel.dcx.springboot.model.backend.data.ClaimDetailsModel;
 import chatfuel.dcx.springboot.model.backend.data.PolicyDetailsModel;
 import chatfuel.dcx.springboot.utils.API;
@@ -41,7 +38,7 @@ public class HelloController {
 
 	@RequestMapping("/")
 	String home(ModelMap modal) {
-		return "Welcome to chatfuel middleware, please go";
+		return "Welcome to chatfuel middleware, please go to the APIs you wish to go";
 	}
 
 	@RequestMapping("/callback")
