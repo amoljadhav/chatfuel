@@ -56,7 +56,7 @@ public class HelloController {
 	@RequestMapping(API_CONST.GET_POLICY)
 	public SetAttributes getPolicyDetailsByPolicyNumber(
 			@RequestParam(value = API_CONST.POLICYNUMBER, defaultValue = "506-8823987") String policyNumber) {
-		SetAttributes attributes = new SetAttributes();
+		SetAttributes attributes = null;
 
 
 		try {
@@ -66,17 +66,16 @@ public class HelloController {
 					authToken);
 			if (response != null) {
 				PolicyDetailsModel policyDetails = new PolicyDetailsModel(response);
-
+				attributes = new SetAttributes(policyDetails);
 				//
 				System.out.println(policyDetails.getTotal_Premium__c()+ "," + policyDetails.getAttributes().getType());
 				//
-				MessageBody messageBody = new MessageBody(policyDetails);
+				//MessageBody messageBody = new MessageBody(policyDetails);
 				
 				SetAttributesData attributesData = new SetAttributesData();
 				attributesData.setServiceresponsecomplete("true");
 				
 				attributes.setSet_attributes(attributesData);
-				attributes.setMessages(messageBody);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -89,7 +88,7 @@ public class HelloController {
 	public SetAttributes getClaimDetailsByClaimNumber(
 			@RequestParam(value = API_CONST.CLAIMNUMBER, defaultValue = "454545") String claimNumber) {
 		
-		SetAttributes attributes = new SetAttributes();
+		SetAttributes attributes = null;
 
 		try {
 			String authToken = getOAuthToken();
@@ -97,12 +96,13 @@ public class HelloController {
 			JSONObject response = getData(API.GET_CLAIM_BY_CLAIMNO + claimNumber, authToken);
 			if (response != null) {
 				ClaimDetailsModel claimsDetails = new ClaimDetailsModel(response);
-				MessageBody messageBody = new MessageBody(claimsDetails);
+				attributes = new SetAttributes(claimsDetails);
+				//MessageBody messageBody = new MessageBody(claimsDetails);
 				SetAttributesData attributesData = new SetAttributesData();
 				attributesData.setServiceresponsecomplete("true");
 				
 				attributes.setSet_attributes(attributesData);
-				attributes.setMessages(messageBody);
+				//attributes.setMessages(messageBody);
 				
 //				System.out.println("response:==>>" + response.toString());
 			}
