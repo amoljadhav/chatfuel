@@ -16,8 +16,8 @@ public class ClaimDetailsModel {
 
 		Transaction_status__c = Utils.getData(response, "Name");
 		Name = Utils.getData(response, "Name");
-		Claim_No__c = Utils.getData(response, "Name");
-		Id = Utils.getData(response, "Name");
+		Claim_No__c = Utils.getData(response, "Claim_No__c");
+		Id = Utils.getData(response, "Id");
 
 		if (response.has("attributes") && !response.isNull("attributes")) {
 			JSONObject jsonObj2 = response.getJSONObject("attributes");
