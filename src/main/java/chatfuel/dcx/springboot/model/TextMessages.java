@@ -1,4 +1,4 @@
-package chatfuel.dcx.springboot.controller;
+package chatfuel.dcx.springboot.model;
 
 public class TextMessages {
 	

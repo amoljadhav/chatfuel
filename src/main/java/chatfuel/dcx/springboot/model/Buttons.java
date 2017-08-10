@@ -1,9 +1,20 @@
-package chatfuel.dcx.springboot.controller;
+package chatfuel.dcx.springboot.model;
 
-public class AttributeType {
+public class Buttons {
+
+	private String title;
 
 	private String type;
+
 	private String url;
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
 	public String getType() {
 		return type;
