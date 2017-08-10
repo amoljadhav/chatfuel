@@ -4,8 +4,12 @@ package chatfuel.dcx.springboot.model;
 public class Attachment {
 	private Payload payload;
 
-	private String type;
+	private String type = "template";
 
+	public Attachment(Payload payload){
+		this.payload = payload;
+	}
+	
 	public Payload getPayload() {
 		return payload;
 	}

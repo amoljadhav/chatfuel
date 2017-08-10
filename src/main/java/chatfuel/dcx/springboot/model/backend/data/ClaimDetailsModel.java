@@ -2,6 +2,8 @@ package chatfuel.dcx.springboot.model.backend.data;
 
 import org.json.JSONObject;
 
+import chatfuel.dcx.springboot.utils.Utils;
+
 public class ClaimDetailsModel {
 
 	private String Transaction_status__c;
@@ -10,24 +12,27 @@ public class ClaimDetailsModel {
 	private String Claim_No__c;
 	private String Name;
 
-	
 	public ClaimDetailsModel(JSONObject response) {
-		
-		Transaction_status__c = response.getString("Transaction_status__c");
-		Name = response.getString("Name");
-		Claim_No__c = response.getString("Claim_No__c");
-		Id = response.getString("Id");
 
-		JSONObject jsonObj2 = response.getJSONObject("attributes");
-		String type = jsonObj2.getString("type");
-		String url = jsonObj2.getString("url");
-		AttributeType attr = new AttributeType();
-		attr.setType(type);
-		attr.setUrl(url);
-		attributes = attr;
+		Transaction_status__c = Utils.getData(response, "Name");
+		Name = Utils.getData(response, "Name");
+		Claim_No__c = Utils.getData(response, "Name");
+		Id = Utils.getData(response, "Name");
+
+		if (response.has("attributes") && !response.isNull("attributes")) {
+			JSONObject jsonObj2 = response.getJSONObject("attributes");
+
+			String type = Utils.getData(jsonObj2, "type");
+			String url = Utils.getData(jsonObj2, "url");
+			AttributeType attr = new AttributeType();
+			attr.setType(type);
+			attr.setUrl(url);
+			attributes = attr;
+		}
+
 		System.out.println(toString());
 	}
-	
+
 	public String getTransaction_status__c() {
 		return Transaction_status__c;
 	}
@@ -67,12 +72,11 @@ public class ClaimDetailsModel {
 	public void setName(String name) {
 		Name = name;
 	}
-	
-    @Override
-    public String toString()
-    {
-        return "ClassPojo [Name = "+Name+", Claim_No__c = "+Claim_No__c+", Transaction_status__c = "+Transaction_status__c+", Id = "+Id+", attributes = "+attributes+"]";
-    }
 
+	@Override
+	public String toString() {
+		return "ClassPojo [Name = " + Name + ", Claim_No__c = " + Claim_No__c + ", Transaction_status__c = "
+				+ Transaction_status__c + ", Id = " + Id + ", attributes = " + attributes + "]";
+	}
 
 }

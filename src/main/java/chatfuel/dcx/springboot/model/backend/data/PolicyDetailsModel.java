@@ -2,6 +2,8 @@ package chatfuel.dcx.springboot.model.backend.data;
 
 import org.json.JSONObject;
 
+import chatfuel.dcx.springboot.utils.Utils;
+
 public class PolicyDetailsModel {
 
 	
@@ -24,21 +26,27 @@ public class PolicyDetailsModel {
 	private AttributeType attributes;
 
 	public PolicyDetailsModel(JSONObject response) {
-		Name = response.getString("Name");
-		Id = response.getString("Id");
-		Paid_to_date__c = response.getString("Paid_to_date__c");
-		//StageName = response.getString("StageName");
-		Policy_status__c = response.getString("Policy_status__c");
-		Payment_method__c = response.getString("Payment_method__c");
-		Payment_mode__c = response.getString("Payment_mode__c");
-		Total_Premium__c = response.getDouble("Total_Premium__c");
-		JSONObject jsonObj2 = response.getJSONObject("attributes");
-		String type = jsonObj2.getString("type");
-		String url = jsonObj2.getString("url");
-		AttributeType attr = new AttributeType();
-		attr.setType(type);
-		attr.setUrl(url);
-		attributes = attr;
+		Name = Utils.getData(response, "Name");
+		Id = Utils.getData(response, "Id");
+		Paid_to_date__c = Utils.getData(response, "Paid_to_date__c");
+		Policy_status__c = Utils.getData(response, "Policy_status__c");
+		Payment_method__c = Utils.getData(response, "Payment_method__c");
+		Payment_mode__c = Utils.getData(response, "Payment_mode__c");
+		
+		if(response.has("Total_Premium__c") && !response.isNull("Total_Premium__c")){
+			Total_Premium__c = response.getDouble("Total_Premium__c");
+		}
+		
+		if(response.has("attributes") && !response.isNull("attributes")){
+			JSONObject jsonObj2 = response.getJSONObject("attributes");
+		
+			String type =  Utils.getData(jsonObj2, "type");
+			String url = Utils.getData(jsonObj2, "url");
+			AttributeType attr = new AttributeType();
+			attr.setType(type);
+			attr.setUrl(url);
+			attributes = attr;
+		}
 		System.out.println(toString());
 	}
 

@@ -5,9 +5,6 @@ public class API {
 	public static final String USERNAME = "sandeep.thumu@ktaxa.th.uat";
 	public static final String PASSWORD = "Chatbot@7890-";
 	
-			
-			
-
 	
 	public static final String HOST_NAME = "https://ktaxa-ipro--uat.cs58.my.salesforce.com/";
 	public static final String TOKEN_URL = "https://ktaxa-ipro--uat.cs58.my.salesforce.com/services/oauth2/token";

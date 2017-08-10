@@ -13,10 +13,11 @@ public class MessageBody {
 	public List<TextMessages> getMessages() {
 		return messages;
 	}
-	
+	public MessageBody(){
+		messages = new ArrayList<>();
+	}
 	public MessageBody(PolicyDetailsModel policyDetailsModel){
 		messages = new ArrayList<TextMessages>();
-		
 		TextMessages tm1 = new TextMessages();
 		tm1.setText("Policy Number is " + policyDetailsModel.getName());
 		
@@ -57,7 +58,7 @@ public class MessageBody {
 //		messages.add(tm7);
 		messages.add(tm8);
 		messages.add(tm9);
-		messages.add(tm10);
+		//messages.add(tm10);
 		
 	}
 	
@@ -90,7 +91,7 @@ public class MessageBody {
 		messages.add(tm3);
 		messages.add(tm4);
 		messages.add(tm9);
-		messages.add(tm10);
+		//messages.add(tm10);
 	}
 
 	public void setMessages(List<TextMessages> messages) {

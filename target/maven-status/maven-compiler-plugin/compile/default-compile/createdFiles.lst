@@ -11,5 +11,6 @@ chatfuel\dcx\springboot\model\Attachment.class
 chatfuel\dcx\springboot\controller\HelloController.class
 chatfuel\dcx\springboot\model\Elements.class
 chatfuel\dcx\springboot\model\Payload.class
+chatfuel\dcx\springboot\model\backend\data\MultiplePolicyDetails.class
 chatfuel\dcx\springboot\model\SetAttributesData.class
 chatfuel\dcx\springboot\SpringBootStandAloneApp.class

@@ -2,33 +2,38 @@ package chatfuel.dcx.springboot.model;
 
 public class Payload {
 
-	private String top_element_style;
+	private String template_type = "button";
 
-	private String template_type;
+	private String text;
 
-	private Elements[] elements;
+	private Buttons[] buttons;
+	
+	public Payload(Buttons[] buttons, String text){
+		this.text = text;
+		this.buttons = buttons;
+	}
 
 	public String getTop_element_style() {
-		return top_element_style;
-	}
-
-	public void setTop_element_style(String top_element_style) {
-		this.top_element_style = top_element_style;
-	}
-
-	public String getTemplate_type() {
 		return template_type;
 	}
 
-	public void setTemplate_type(String template_type) {
+	public void setTop_element_style(String template_type) {
 		this.template_type = template_type;
 	}
 
-	public Elements[] getElements() {
-		return elements;
+	public String getTemplate_type() {
+		return text;
 	}
 
-	public void setElements(Elements[] elements) {
-		this.elements = elements;
+	public void setTemplate_type(String text) {
+		this.text = text;
+	}
+
+	public Buttons[] getElements() {
+		return buttons;
+	}
+
+	public void setElements(Buttons[] buttons) {
+		this.buttons = buttons;
 	}
 }
