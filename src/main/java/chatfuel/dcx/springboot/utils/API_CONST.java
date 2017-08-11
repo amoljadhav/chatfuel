@@ -6,8 +6,8 @@ public class API_CONST {
 	public static final String GET_CLAIM = "/getclaimdetailsbyclaimnumber";
 	
 	
-	public static final String POLICYNUMBER = "/policynum";
-	public static final String CLAIMNUMBER = "/claimnumber";
+	public static final String POLICYNUMBER = "policynum";
+	public static final String CLAIMNUMBER = "claimnumber";
 	
 	
 //	We have found multiple policies. Please choose one.
