@@ -1,14 +1,14 @@
 package chatfuel.dcx.springboot.model;
 
-public class Payload {
+public class ButtonPayload {
 
 	private String template_type = "button";
 
 	private String text;
-	
+		
 	private Buttons[] buttons;
 	
-	public Payload(Buttons[] buttons, String text){
+	public ButtonPayload(Buttons[] buttons, String text){
 		this.text = text;
 		this.buttons = buttons;
 	}

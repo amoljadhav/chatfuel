@@ -24,6 +24,14 @@ public class Buttons {
 		url = uri+"="+Name;
 
 	}
+	
+	public Buttons(JSONObject jsonObject, String uri,String title){
+		
+		this.title = title;
+		String Name = Utils.getData(jsonObject, "Name");
+		url = uri+"="+Name;
+
+	}
 
 	public String getTitle() {
 		return title;

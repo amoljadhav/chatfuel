@@ -1,20 +1,20 @@
 package chatfuel.dcx.springboot.model;
 
 
-public class Attachment {
-	private Payload payload;
+public class ListAttachment {
+	private ListPayload payload;
 
 	private String type = "template";
 
-	public Attachment(Payload payload){
+	public ListAttachment(ListPayload payload){
 		this.payload = payload;
 	}
 	
-	public Payload getPayload() {
+	public ListPayload getPayload() {
 		return payload;
 	}
 
-	public void setPayload(Payload payload) {
+	public void setPayload(ListPayload payload) {
 		this.payload = payload;
 	}
 
