@@ -1,5 +1,7 @@
 package chatfuel.dcx.springboot.utils;
 
+import java.text.DecimalFormat;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.json.JSONObject;
@@ -21,6 +23,12 @@ public class Utils {
 					":" + request.getServerPort();
 		}
 		return url;
+	}
+	
+	public static String getParsedAmount(double amount){
+        DecimalFormat formatter = new DecimalFormat("#,###.00");
+        String result = formatter.format(amount);
+        return result;
 	}
 	
 	public static void printLn(String message){

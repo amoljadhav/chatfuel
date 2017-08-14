@@ -3,6 +3,7 @@ package chatfuel.dcx.springboot.model;
 import chatfuel.dcx.springboot.model.backend.data.ClaimDetailsModel;
 import chatfuel.dcx.springboot.model.backend.data.PolicyDetailsModel;
 import chatfuel.dcx.springboot.utils.UserStaticData;
+import chatfuel.dcx.springboot.utils.Utils;
 
 public class SetAttributes {
 
@@ -34,7 +35,7 @@ public class SetAttributes {
 		// tm7.setText("Stage name is "+ policyDetailsModel.getStageName());
 		//
 		TextMessages tm8 = new TextMessages();
-		tm8.setText(UserStaticData.TOTAL_PREMIUM + policyDetailsModel.getTotal_Premium__c());
+		tm8.setText(UserStaticData.TOTAL_PREMIUM + Utils.getParsedAmount(policyDetailsModel.getTotal_Premium__c()));
 
 //		TextMessages tm9 = new TextMessages();
 //		tm9.setText("Policy type : " + policyDetailsModel.getAttributes().getType());
@@ -74,7 +75,7 @@ public class SetAttributes {
 
 		
 		TextMessages tm5 = new TextMessages();
-		tm5.setText(UserStaticData.CLAIM_AMOUNT_PAYABLE + claimDetailsModel.getClaim_Amount_Payable_in_Claim_Currency__c());
+		tm5.setText(UserStaticData.CLAIM_AMOUNT_PAYABLE + Utils.getParsedAmount(claimDetailsModel.getClaim_Amount_Payable_in_Claim_Currency__c()));
 
 		
 		
