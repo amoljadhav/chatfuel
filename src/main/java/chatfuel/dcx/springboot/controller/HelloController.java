@@ -43,6 +43,7 @@ import chatfuel.dcx.springboot.model.backend.data.ClaimDetailsModel;
 import chatfuel.dcx.springboot.model.backend.data.PolicyDetailsModel;
 import chatfuel.dcx.springboot.utils.API;
 import chatfuel.dcx.springboot.utils.API_CONST;
+import chatfuel.dcx.springboot.utils.Utils;
 
 @RestController
 public class HelloController {
@@ -70,7 +71,7 @@ public class HelloController {
 				PolicyDetailsModel policyDetails = new PolicyDetailsModel(response);
 				attributes = new SetAttributes(policyDetails);
 				//
-				System.out.println(policyDetails.getTotal_Premium__c() + "," + policyDetails.getAttributes().getType());
+				Utils.printLn(policyDetails.getTotal_Premium__c() + "," + policyDetails.getAttributes().getType());
 				//
 				// MessageBody messageBody = new MessageBody(policyDetails);
 
@@ -99,14 +100,9 @@ public class HelloController {
 			if (response != null) {
 				ClaimDetailsModel claimsDetails = new ClaimDetailsModel(response);
 				attributes = new SetAttributes(claimsDetails);
-				// MessageBody messageBody = new MessageBody(claimsDetails);
 				SetAttributesData attributesData = new SetAttributesData();
 				attributesData.setServiceresponsecomplete("true");
-
 				attributes.setSet_attributes(attributesData);
-				// attributes.setMessages(messageBody);
-
-				// System.out.println("response:==>>" + response.toString());
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -115,11 +111,11 @@ public class HelloController {
 		return attributes;
 	}
 
-	@RequestMapping("/getpolicydetailsbyuserdetails")
+	@RequestMapping(API_CONST.GET_POLICY_DETAILS_BY_USER_DETAILS)
 	public MultipleButtonMessageAttachments getPolicyDetailsByUserDetails(
-			@RequestParam(value = "firstname", defaultValue = "") String firstName,
-			@RequestParam(value = "lastname", defaultValue = "") String lastName,
-			@RequestParam(value = "dob", defaultValue = "") String dob, HttpServletRequest request) {
+			@RequestParam(value = API_CONST.FIRST_NAME, defaultValue = "") String firstName,
+			@RequestParam(value = API_CONST.LAST_NAME, defaultValue = "") String lastName,
+			@RequestParam(value = API_CONST.DOB, defaultValue = "") String dob, HttpServletRequest request) {
 
 		MultipleButtonMessageAttachments multipleMessageAttachments = new MultipleButtonMessageAttachments();
 
@@ -130,11 +126,9 @@ public class HelloController {
 					API.GET_POLICY_BYPOLICY_FLD + API.FIRST_NAME + firstName + API.LAST_NAME + lastName + API.DOB + dob,
 					authToken);
 			if (response != null) {
-				String uri = request.getScheme() + "://" + // "http" + "://
-						request.getServerName() + // "myhost"
-						":" + request.getServerPort();
-				System.out.println("response data: " + response.toString());
-				System.out.println("url: " + response.toString());
+				String uri = Utils.getHostUrl(request);
+				Utils.printLn("response data: " + response.toString());
+				Utils.printLn("url: " + response.toString());
 				Buttons[] btnList = new Buttons[response.length()];
 				for (int i = 0; i < response.length(); i++) {
 					JSONObject jsonObject = response.getJSONObject(i);
@@ -161,116 +155,13 @@ public class HelloController {
 
 		return multipleMessageAttachments;
 	}
-
-	@RequestMapping("/getpolicylist")
-	public MultipleListMessageAttachments getPolicyLists(
-			@RequestParam(value = "firstname", defaultValue = "") String firstName,
-			@RequestParam(value = "lastname", defaultValue = "") String lastName,
-			@RequestParam(value = "dob", defaultValue = "") String dob, HttpServletRequest request) {
-
-		MultipleListMessageAttachments multipleListMessageAttachments = new MultipleListMessageAttachments();
-
-		try {
-			String authToken = getOAuthToken();
-
-			JSONArray response = getDataInArray(
-					API.GET_POLICY_BYPOLICY_FLD + API.FIRST_NAME + firstName + API.LAST_NAME + lastName + API.DOB + dob,
-					authToken);
-			if (response != null) {
-				String uri = request.getScheme() + "://" + // "http" + "://
-						request.getServerName() + // "myhost"
-						":" + request.getServerPort();
-				System.out.println("response data: " + response.toString());
-				System.out.println("url: " + response.toString());
-				Elements[] elementList = new Elements[response.length()];
-				for (int i = 0; i < response.length(); i++) {
-					
-					Buttons[] btnList = new Buttons[1];
-					JSONObject jsonObject = response.getJSONObject(i);
-					Buttons buttons = new Buttons(jsonObject, uri + API_CONST.GET_POLICY + "?" + API_CONST.POLICYNUMBER,
-							API_CONST.VIEW_POLICY);
-					btnList[0] = buttons;
-					Elements elements = new Elements(jsonObject, btnList);
-					elementList[i] = elements;
-				}
-
-				ListPayload payloadList = new ListPayload (elementList);
-				ListAttachment listAttachment = new ListAttachment(payloadList);
-
-				ListMessageAttachment attachment2 = new ListMessageAttachment();
-				attachment2.setAttachment(listAttachment);
-				ListMessageAttachment[] messageAttachment = new ListMessageAttachment[1];
-				messageAttachment[0] = attachment2;
-
-				multipleListMessageAttachments.setMessages(messageAttachment);
-
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return multipleListMessageAttachments;
-	}
-	
-
-
-	@RequestMapping("/getclaimlist")
-	public MultipleListMessageAttachments getClaimList(
-			@RequestParam(value = "firstname", defaultValue = "") String firstName,
-			@RequestParam(value = "lastname", defaultValue = "") String lastName,
-			@RequestParam(value = "dob", defaultValue = "") String dob, HttpServletRequest request) {
-
-		MultipleListMessageAttachments multipleListMessageAttachments = new MultipleListMessageAttachments();
-
-		try {
-			String authToken = getOAuthToken();
-
-			JSONArray response = getDataInArray(
-					API.GET_CLAIM_BYCLAIM_FLD + API.FIRST_NAME + firstName + API.LAST_NAME + lastName + API.DOB + dob,
-					authToken);
-			if (response != null) {
-				// System.out.println("response: "+response.toString());
-
-				String uri = request.getScheme() + "://" + // "http" + "://
-						request.getServerName() + // "myhost"
-						":" + request.getServerPort();
-				// System.out.println("response data: "+response.toString());
-				// System.out.println("url: "+response.toString());
-				Elements[] elementList = new Elements[response.length()];
-				
-				for (int i = 0; i < response.length(); i++) {
-					Buttons[] btnList = new Buttons[1];
-					JSONObject jsonObject = response.getJSONObject(i);
-					Buttons buttons = new Buttons(jsonObject,
-							uri + API_CONST.GET_CLAIM + "?" + API_CONST.CLAIMNUMBER.replace("/", ""));
-					btnList[0] = buttons;
-					Elements elements = new Elements(jsonObject, btnList);
-					elementList[i]= elements;
-				}
-
-				ListPayload payloadList = new ListPayload (elementList);
-				ListAttachment listAttachment = new ListAttachment(payloadList);
-
-				ListMessageAttachment attachment2 = new ListMessageAttachment();
-				attachment2.setAttachment(listAttachment);
-				ListMessageAttachment[] messageAttachment = new ListMessageAttachment[1];
-				messageAttachment[0] = attachment2;
-
-				multipleListMessageAttachments.setMessages(messageAttachment);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return multipleListMessageAttachments;
-	}
 	
 	
-	@RequestMapping("/getclaimdetailsbyuserdetails")
+	@RequestMapping(API_CONST.GET_CLAIM_DETAILS_BY_USER_DETAILS)
 	public MultipleButtonMessageAttachments getClaimDetailsByUserDetails(
-			@RequestParam(value = "firstname", defaultValue = "") String firstName,
-			@RequestParam(value = "lastname", defaultValue = "") String lastName,
-			@RequestParam(value = "dob", defaultValue = "") String dob, HttpServletRequest request) {
+			@RequestParam(value = API_CONST.FIRST_NAME, defaultValue = "") String firstName,
+			@RequestParam(value = API_CONST.LAST_NAME, defaultValue = "") String lastName,
+			@RequestParam(value = API_CONST.DOB, defaultValue = "") String dob, HttpServletRequest request) {
 
 		MultipleButtonMessageAttachments multipleMessageAttachments = new MultipleButtonMessageAttachments();
 
@@ -281,18 +172,15 @@ public class HelloController {
 					API.GET_CLAIM_BYCLAIM_FLD + API.FIRST_NAME + firstName + API.LAST_NAME + lastName + API.DOB + dob,
 					authToken);
 			if (response != null) {
-				// System.out.println("response: "+response.toString());
+				// Utils.printLn("response: "+response.toString());
 
-				String uri = request.getScheme() + "://" + // "http" + "://
-						request.getServerName() + // "myhost"
-						":" + request.getServerPort();
-				// System.out.println("response data: "+response.toString());
-				// System.out.println("url: "+response.toString());
+				String uri = Utils.getHostUrl(request);
+				// Utils.printLn("response data: "+response.toString());
+				// Utils.printLn("url: "+response.toString());
 				Buttons[] btnList = new Buttons[response.length()];
 				for (int i = 0; i < response.length(); i++) {
 					JSONObject jsonObject = response.getJSONObject(i);
-					Buttons buttons = new Buttons(jsonObject,
-							uri + API_CONST.GET_CLAIM + "?" + API_CONST.CLAIMNUMBER.replace("/", ""));
+					Buttons buttons = new Buttons(jsonObject, uri + API_CONST.GET_CLAIM + "?" + API_CONST.CLAIMNUMBER);
 					btnList[i] = buttons;
 				}
 
@@ -314,6 +202,107 @@ public class HelloController {
 		return multipleMessageAttachments;
 	}
 
+	@RequestMapping(API_CONST.GET_POLICYLIST)
+	public MultipleListMessageAttachments getPolicyLists(
+			@RequestParam(value = API_CONST.FIRST_NAME, defaultValue = "") String firstName,
+			@RequestParam(value = API_CONST.LAST_NAME, defaultValue = "") String lastName,
+			@RequestParam(value = API_CONST.DOB, defaultValue = "") String dob, HttpServletRequest request) {
+
+		MultipleListMessageAttachments multipleListMessageAttachments = new MultipleListMessageAttachments();
+
+		try {
+			String authToken = getOAuthToken();
+
+			JSONArray response = getDataInArray(
+					API.GET_POLICY_BYPOLICY_FLD + API.FIRST_NAME + firstName + API.LAST_NAME + lastName + API.DOB + dob,
+					authToken);
+			if (response != null) {
+				String uri = request.getScheme() + "://" + // "http" + "://
+						request.getServerName() + // "myhost"
+						":" + request.getServerPort();
+				Utils.printLn("response data: " + response.toString());
+				Utils.printLn("url: " + response.toString());
+				Elements[] elementList = new Elements[response.length()];
+				for (int i = 0; i < response.length(); i++) {
+
+					Buttons[] btnList = new Buttons[1];
+					JSONObject jsonObject = response.getJSONObject(i);
+					Buttons buttons = new Buttons(jsonObject, uri + API_CONST.GET_POLICY + "?" + API_CONST.POLICYNUMBER,
+							API_CONST.VIEW_POLICY);
+					btnList[0] = buttons;
+					Elements elements = new Elements(jsonObject, btnList);
+					elementList[i] = elements;
+				}
+
+				ListPayload payloadList = new ListPayload(elementList);
+				ListAttachment listAttachment = new ListAttachment(payloadList);
+
+				ListMessageAttachment attachment2 = new ListMessageAttachment();
+				attachment2.setAttachment(listAttachment);
+				ListMessageAttachment[] messageAttachment = new ListMessageAttachment[1];
+				messageAttachment[0] = attachment2;
+
+				multipleListMessageAttachments.setMessages(messageAttachment);
+
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return multipleListMessageAttachments;
+	}
+
+	@RequestMapping(API_CONST.GET_CLAIMLIST)
+	public MultipleListMessageAttachments getClaimList(
+			@RequestParam(value = API_CONST.FIRST_NAME, defaultValue = "") String firstName,
+			@RequestParam(value = API_CONST.LAST_NAME, defaultValue = "") String lastName,
+			@RequestParam(value = API_CONST.DOB, defaultValue = "") String dob, HttpServletRequest request) {
+
+		MultipleListMessageAttachments multipleListMessageAttachments = new MultipleListMessageAttachments();
+
+		try {
+			String authToken = getOAuthToken();
+
+			JSONArray response = getDataInArray(
+					API.GET_CLAIM_BYCLAIM_FLD + API.FIRST_NAME + firstName + API.LAST_NAME + lastName + API.DOB + dob,
+					authToken);
+			if (response != null) {
+				// Utils.printLn("response: "+response.toString());
+
+				String uri = Utils.getHostUrl(request);
+				// Utils.printLn("response data: "+response.toString());
+				// Utils.printLn("url: "+response.toString());
+				Elements[] elementList = new Elements[response.length()];
+
+				for (int i = 0; i < response.length(); i++) {
+					Buttons[] btnList = new Buttons[1];
+					JSONObject jsonObject = response.getJSONObject(i);
+					Buttons buttons = new Buttons(jsonObject,
+							uri + API_CONST.GET_CLAIM + "?" + API_CONST.CLAIMNUMBER.replace("/", ""));
+					btnList[0] = buttons;
+					Elements elements = new Elements(jsonObject, btnList);
+					elementList[i] = elements;
+				}
+
+				ListPayload payloadList = new ListPayload(elementList);
+				ListAttachment listAttachment = new ListAttachment(payloadList);
+
+				ListMessageAttachment attachment2 = new ListMessageAttachment();
+				attachment2.setAttachment(listAttachment);
+				ListMessageAttachment[] messageAttachment = new ListMessageAttachment[1];
+				messageAttachment[0] = attachment2;
+
+				multipleListMessageAttachments.setMessages(messageAttachment);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return multipleListMessageAttachments;
+	}
+
+
+
 	private String getOAuthToken() {
 		String token = null;
 		try {
@@ -331,7 +320,7 @@ public class HelloController {
 
 			token = oAuthClient.accessToken(request, OAuthJSONAccessTokenResponse.class).getAccessToken();
 
-			System.out.println("token: " + token);
+			Utils.printLn("token: " + token);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -356,7 +345,7 @@ public class HelloController {
 			httpGet.setURI(builder.build());
 
 			CloseableHttpResponse closeableresponse = httpclient.execute(httpGet);
-			System.out.println("Response Status line :" + closeableresponse.getStatusLine());
+			Utils.printLn("Response Status line :" + closeableresponse.getStatusLine());
 
 			if (closeableresponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 				// Now lets use the standard java json classes to work with the
@@ -367,7 +356,7 @@ public class HelloController {
 					InputStream rstream = entity.getContent();
 					JSONObject authResponse = new JSONObject(new JSONTokener(rstream));
 
-					System.out.println(authResponse.toString());
+					Utils.printLn(authResponse.toString());
 					response = authResponse;
 
 				} catch (JSONException e) {
@@ -400,7 +389,7 @@ public class HelloController {
 			httpGet.setURI(builder.build());
 
 			CloseableHttpResponse closeableresponse = httpclient.execute(httpGet);
-			System.out.println("Response Status line :" + closeableresponse.getStatusLine());
+			Utils.printLn("Response Status line :" + closeableresponse.getStatusLine());
 
 			if (closeableresponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 				// Now lets use the standard java json classes to work with the
@@ -410,7 +399,7 @@ public class HelloController {
 					HttpEntity entity = closeableresponse.getEntity();
 					InputStream rstream = entity.getContent();
 					JSONArray authResponse = new JSONArray(new JSONTokener(rstream));
-					System.out.println(authResponse.toString());
+					Utils.printLn(authResponse.toString());
 					response = authResponse;
 					// response = authResponse.toString();
 

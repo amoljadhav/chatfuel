@@ -28,13 +28,13 @@ public class MessageBody {
 		tm3.setText("Policy paid date is "+ policyDetailsModel.getPaid_to_date__c());
 		
 		TextMessages tm4 = new TextMessages();
-		tm4.setText("Policy Payment method name is "+ policyDetailsModel.getPayment_method__c());
+		tm4.setText("Policy Payment method name is "+ policyDetailsModel.getBot_Payment__c());
 		
 		TextMessages tm5 = new TextMessages();
-		tm5.setText("Policy mode is "+ policyDetailsModel.getPayment_mode__c());
+		tm5.setText("Policy mode is "+ policyDetailsModel.getBot_Payment_Mode__c());
 		
 		TextMessages tm6 = new TextMessages();
-		tm6.setText("Policy status is "+ policyDetailsModel.getPolicy_status__c());
+		tm6.setText("Policy status is "+ policyDetailsModel.getBot_Policy_Status__c());
 		
 //		TextMessages tm7 = new TextMessages();
 //		tm7.setText("Stage name is "+ policyDetailsModel.getStageName());
@@ -77,7 +77,7 @@ public class MessageBody {
 		tm3.setText("Claim number is "+ claimDetailsModel.getClaim_No__c());
 		
 		TextMessages tm4 = new TextMessages();
-		tm4.setText("Transaction status is "+ claimDetailsModel.getTransaction_status__c());
+		tm4.setText("Transaction status is "+ claimDetailsModel.getBot_Claim_Status__c());
 		
 		TextMessages tm9 = new TextMessages();
 		tm9.setText("Attribute type for the policy is "+ claimDetailsModel.getAttributes().getType());

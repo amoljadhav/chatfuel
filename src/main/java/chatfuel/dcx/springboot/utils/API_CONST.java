@@ -6,10 +6,31 @@ import java.util.List;
 public class API_CONST {
 
 	public static final String GET_POLICY = "/getpolicydetailsbypolicynumber";
+	
 	public static final String GET_CLAIM = "/getclaimdetailsbyclaimnumber";
+	
+
+	public static final String GET_POLICY_DETAILS_BY_USER_DETAILS = "/getpolicydetailsbyuserdetails";
+	public static final String GET_CLAIM_DETAILS_BY_USER_DETAILS = "/getclaimdetailsbyuserdetails";
+	
+	
+
+	
+	public static final String GET_POLICYLIST = "/getpolicylist";
+	public static final String GET_CLAIMLIST = "/getclaimlist";
+
+	
+	
 
 	public static final String POLICYNUMBER = "policynum";
 	public static final String CLAIMNUMBER = "claimnumber";
+	public static final String FIRST_NAME = "firstname";
+	public static final String LAST_NAME = "lastname";
+	public static final String DOB = "dob";
+
+	
+	
+	
 
 	// We have found multiple policies. Please choose one.
 	public static final String FOUND_MULTIPLE = "We have found multiple ";
