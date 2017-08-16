@@ -6,12 +6,14 @@ chatfuel\dcx\springboot\model\Buttons.class
 chatfuel\dcx\springboot\model\ListPayload.class
 chatfuel\dcx\springboot\model\ButtonPayload.class
 chatfuel\dcx\springboot\model\Elements.class
+chatfuel\dcx\springboot\model\errordata\SetErrorAttributes.class
 chatfuel\dcx\springboot\model\ButtonMessageAttachment.class
 chatfuel\dcx\springboot\utils\Utils.class
 chatfuel\dcx\springboot\model\SetAttributesData.class
 chatfuel\dcx\springboot\model\backend\data\AttributeType.class
 chatfuel\dcx\springboot\utils\API_CONST.class
 chatfuel\dcx\springboot\model\SetAttributes.class
+chatfuel\dcx\springboot\model\errordata\SetAttributesErrorData.class
 chatfuel\dcx\springboot\utils\API.class
 chatfuel\dcx\springboot\model\backend\data\ClaimDetailsModel.class
 chatfuel\dcx\springboot\model\ButtonAttachment.class

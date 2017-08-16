@@ -27,6 +27,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import chatfuel.dcx.springboot.model.ButtonAttachment;
 import chatfuel.dcx.springboot.model.ButtonMessageAttachment;
 import chatfuel.dcx.springboot.model.ButtonPayload;
@@ -41,6 +44,7 @@ import chatfuel.dcx.springboot.model.SetAttributes;
 import chatfuel.dcx.springboot.model.SetAttributesData;
 import chatfuel.dcx.springboot.model.backend.data.ClaimDetailsModel;
 import chatfuel.dcx.springboot.model.backend.data.PolicyDetailsModel;
+import chatfuel.dcx.springboot.model.errordata.SetErrorAttributes;
 import chatfuel.dcx.springboot.utils.API;
 import chatfuel.dcx.springboot.utils.API_CONST;
 import chatfuel.dcx.springboot.utils.Utils;
@@ -49,8 +53,18 @@ import chatfuel.dcx.springboot.utils.Utils;
 public class HelloController {
 
 	@RequestMapping("/")
-	String home(ModelMap modal) {
-		return "Welcome to chatfuel middleware, please go to the APIs you wish to go";
+	public String home(ModelMap modal) {
+		ObjectMapper mapper = new ObjectMapper();
+		String responsedata = null;
+
+		SetErrorAttributes errorAttributes = new SetErrorAttributes("true", "No data found");
+		try {
+			responsedata = mapper.writeValueAsString(errorAttributes);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return responsedata;
 	}
 
 	@RequestMapping("/callback")
@@ -59,17 +73,18 @@ public class HelloController {
 	}
 
 	@RequestMapping(API_CONST.GET_POLICY)
-	public SetAttributes getPolicyDetailsByPolicyNumber(
-			@RequestParam(value = API_CONST.POLICYNUMBER, defaultValue = "506-8823987") String policyNumber) {
-		SetAttributes attributes = null;
+	public String getPolicyDetailsByPolicyNumber(
+			@RequestParam(value = API_CONST.POLICYNUMBER, defaultValue = "") String policyNumber) {
+		String responsedata = null;
 
 		try {
 			String authToken = getOAuthToken();
+			ObjectMapper mapper = new ObjectMapper();
 
 			JSONObject response = getData(API.GET_POLICY_BY_POLICYNO + policyNumber, authToken);
-			if (response != null) {
+			if (response != null && response.length()>0) {
 				PolicyDetailsModel policyDetails = new PolicyDetailsModel(response);
-				attributes = new SetAttributes(policyDetails);
+				SetAttributes attributes = new SetAttributes(policyDetails);
 				//
 				Utils.printLn(policyDetails.getTotal_Premium__c() + "," + policyDetails.getAttributes().getType());
 				//
@@ -79,53 +94,64 @@ public class HelloController {
 				attributesData.setServiceresponsecomplete("true");
 
 				attributes.setSet_attributes(attributesData);
+				responsedata = mapper.writeValueAsString(attributes);
+				return responsedata;
+			} else {
+				SetErrorAttributes errorAttributes = new SetErrorAttributes("true",
+						"I could not find the details for the policy - " + policyNumber);
+				responsedata = mapper.writeValueAsString(errorAttributes);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return responsedata;
 
-		return attributes;
 	}
 
 	@RequestMapping(API_CONST.GET_CLAIM)
-	public SetAttributes getClaimDetailsByClaimNumber(
-			@RequestParam(value = API_CONST.CLAIMNUMBER, defaultValue = "454545") String claimNumber) {
-
-		SetAttributes attributes = null;
-
+	public String getClaimDetailsByClaimNumber(
+			@RequestParam(value = API_CONST.CLAIMNUMBER, defaultValue = "") String claimNumber) {
+		String responseData = null;
+		ObjectMapper objMapper = new ObjectMapper();
 		try {
 			String authToken = getOAuthToken();
 
 			JSONObject response = getData(API.GET_CLAIM_BY_CLAIMNO + claimNumber, authToken);
-			if (response != null) {
+			if (response != null && response.length()>0) {
 				ClaimDetailsModel claimsDetails = new ClaimDetailsModel(response);
-				attributes = new SetAttributes(claimsDetails);
+				SetAttributes attributes = new SetAttributes(claimsDetails);
 				SetAttributesData attributesData = new SetAttributesData();
 				attributesData.setServiceresponsecomplete("true");
 				attributes.setSet_attributes(attributesData);
+				responseData = objMapper.writeValueAsString(attributes);
+			} else {
+				SetErrorAttributes errorAttributes = new SetErrorAttributes("true", 
+						"I could not find the details for the claim - " + claimNumber);
+
+				responseData = objMapper.writeValueAsString(errorAttributes);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		return attributes;
+		return responseData;
 	}
 
 	@RequestMapping(API_CONST.GET_POLICY_DETAILS_BY_USER_DETAILS)
-	public MultipleButtonMessageAttachments getPolicyDetailsByUserDetails(
+	public String getPolicyDetailsByUserDetails(
 			@RequestParam(value = API_CONST.FIRST_NAME, defaultValue = "") String firstName,
 			@RequestParam(value = API_CONST.LAST_NAME, defaultValue = "") String lastName,
 			@RequestParam(value = API_CONST.DOB, defaultValue = "") String dob, HttpServletRequest request) {
 
-		MultipleButtonMessageAttachments multipleMessageAttachments = new MultipleButtonMessageAttachments();
+		String responseData = null;
 
 		try {
 			String authToken = getOAuthToken();
-
+			ObjectMapper objMapper = new ObjectMapper();
 			JSONArray response = getDataInArray(
 					API.GET_POLICY_BYPOLICY_FLD + API.FIRST_NAME + firstName + API.LAST_NAME + lastName + API.DOB + dob,
 					authToken);
-			if (response != null) {
+			if (response != null  && response.length()>0) {
 				String uri = Utils.getHostUrl(request);
 				Utils.printLn("response data: " + response.toString());
 				Utils.printLn("url: " + response.toString());
@@ -136,7 +162,7 @@ public class HelloController {
 							uri + API_CONST.GET_POLICY + "?" + API_CONST.POLICYNUMBER.replace("/", ""));
 					btnList[i] = buttons;
 				}
-
+				MultipleButtonMessageAttachments multipleMessageAttachments = new MultipleButtonMessageAttachments();
 				ButtonPayload payload = new ButtonPayload(btnList,
 						API_CONST.FOUND_MULTIPLE + API_CONST.POLICIES + API_CONST.PLEASE_CHOOSE);
 				ButtonAttachment attachment = new ButtonAttachment(payload);
@@ -148,32 +174,39 @@ public class HelloController {
 
 				multipleMessageAttachments.setMessages(messageAttachment);
 
+				responseData = objMapper.writeValueAsString(multipleMessageAttachments);
+
+			} else {
+				SetErrorAttributes errorAttributes = new SetErrorAttributes("true",
+						"I did not find any policy listed for " + firstName+" "+lastName +" and date of birth "+dob);
+
+				responseData = objMapper.writeValueAsString(errorAttributes);
 			}
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		return multipleMessageAttachments;
+		return responseData;
 	}
-	
-	
+
 	@RequestMapping(API_CONST.GET_CLAIM_DETAILS_BY_USER_DETAILS)
-	public MultipleButtonMessageAttachments getClaimDetailsByUserDetails(
+	public String getClaimDetailsByUserDetails(
 			@RequestParam(value = API_CONST.FIRST_NAME, defaultValue = "") String firstName,
 			@RequestParam(value = API_CONST.LAST_NAME, defaultValue = "") String lastName,
 			@RequestParam(value = API_CONST.DOB, defaultValue = "") String dob, HttpServletRequest request) {
 
-		MultipleButtonMessageAttachments multipleMessageAttachments = new MultipleButtonMessageAttachments();
-
+		String responseData = null;
 		try {
+			ObjectMapper mapper = new ObjectMapper();
 			String authToken = getOAuthToken();
 
 			JSONArray response = getDataInArray(
 					API.GET_CLAIM_BYCLAIM_FLD + API.FIRST_NAME + firstName + API.LAST_NAME + lastName + API.DOB + dob,
 					authToken);
-			if (response != null) {
+			if (response != null && response.length()>0) {
 				// Utils.printLn("response: "+response.toString());
-
+				MultipleButtonMessageAttachments multipleMessageAttachments = new MultipleButtonMessageAttachments();
 				String uri = Utils.getHostUrl(request);
 				// Utils.printLn("response data: "+response.toString());
 				// Utils.printLn("url: "+response.toString());
@@ -194,29 +227,34 @@ public class HelloController {
 				messageAttachment[0] = attachment2;
 
 				multipleMessageAttachments.setMessages(messageAttachment);
+				responseData = mapper.writeValueAsString(multipleMessageAttachments);
+			} else {
+				SetErrorAttributes errorAttributes = new SetErrorAttributes("true",
+						"I did not find any claim listed for " + firstName+" "+lastName +" and date of birth "+dob);
+				responseData = mapper.writeValueAsString(errorAttributes);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		return multipleMessageAttachments;
+		return responseData;
 	}
 
 	@RequestMapping(API_CONST.GET_POLICYLIST)
-	public MultipleListMessageAttachments getPolicyLists(
-			@RequestParam(value = API_CONST.FIRST_NAME, defaultValue = "") String firstName,
+	public String getPolicyLists(@RequestParam(value = API_CONST.FIRST_NAME, defaultValue = "") String firstName,
 			@RequestParam(value = API_CONST.LAST_NAME, defaultValue = "") String lastName,
 			@RequestParam(value = API_CONST.DOB, defaultValue = "") String dob, HttpServletRequest request) {
 
-		MultipleListMessageAttachments multipleListMessageAttachments = new MultipleListMessageAttachments();
-
+		String responseData = null;
 		try {
 			String authToken = getOAuthToken();
+			ObjectMapper mapper = new ObjectMapper();
+			MultipleListMessageAttachments multipleListMessageAttachments = new MultipleListMessageAttachments();
 
 			JSONArray response = getDataInArray(
 					API.GET_POLICY_BYPOLICY_FLD + API.FIRST_NAME + firstName + API.LAST_NAME + lastName + API.DOB + dob,
 					authToken);
-			if (response != null) {
+			if (response != null && response.length()>0) {
 				String uri = request.getScheme() + "://" + // "http" + "://
 						request.getServerName() + // "myhost"
 						":" + request.getServerPort();
@@ -243,31 +281,34 @@ public class HelloController {
 				messageAttachment[0] = attachment2;
 
 				multipleListMessageAttachments.setMessages(messageAttachment);
-
+				responseData = mapper.writeValueAsString(multipleListMessageAttachments);
+			} else {
+				SetErrorAttributes errorAttributes = new SetErrorAttributes("true",
+						"I did not find any policy listed for " + firstName+" "+lastName +" and date of birth "+dob);
+				responseData = mapper.writeValueAsString(errorAttributes);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		return multipleListMessageAttachments;
+		return responseData;
 	}
 
 	@RequestMapping(API_CONST.GET_CLAIMLIST)
-	public MultipleListMessageAttachments getClaimList(
-			@RequestParam(value = API_CONST.FIRST_NAME, defaultValue = "") String firstName,
+	public String getClaimList(@RequestParam(value = API_CONST.FIRST_NAME, defaultValue = "") String firstName,
 			@RequestParam(value = API_CONST.LAST_NAME, defaultValue = "") String lastName,
 			@RequestParam(value = API_CONST.DOB, defaultValue = "") String dob, HttpServletRequest request) {
 
-		MultipleListMessageAttachments multipleListMessageAttachments = new MultipleListMessageAttachments();
-
+		String responseData = null;
 		try {
 			String authToken = getOAuthToken();
-
+			ObjectMapper mapper = new ObjectMapper();
 			JSONArray response = getDataInArray(
 					API.GET_CLAIM_BYCLAIM_FLD + API.FIRST_NAME + firstName + API.LAST_NAME + lastName + API.DOB + dob,
 					authToken);
-			if (response != null) {
+			if (response != null && response.length()>0) {
 				// Utils.printLn("response: "+response.toString());
+				MultipleListMessageAttachments multipleListMessageAttachments = new MultipleListMessageAttachments();
 
 				String uri = Utils.getHostUrl(request);
 				// Utils.printLn("response data: "+response.toString());
@@ -293,15 +334,18 @@ public class HelloController {
 				messageAttachment[0] = attachment2;
 
 				multipleListMessageAttachments.setMessages(messageAttachment);
+				responseData = mapper.writeValueAsString(multipleListMessageAttachments);
+			} else {
+				SetErrorAttributes errorAttributes = new SetErrorAttributes("true",
+						"I did not find any claim listed for " + firstName+" "+lastName +" and date of birth "+dob);
+				responseData = mapper.writeValueAsString(errorAttributes);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		return multipleListMessageAttachments;
+		return responseData;
 	}
-
-
 
 	private String getOAuthToken() {
 		String token = null;
@@ -362,10 +406,11 @@ public class HelloController {
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
+			} else {
+				response = null;
 			}
 
 		} catch (URISyntaxException e1) {
-			// TODO Auto­generated catch block
 			e1.printStackTrace();
 		} finally {
 			httpclient.close();
@@ -406,15 +451,27 @@ public class HelloController {
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
+			} else {
+				response = null;
 			}
 
 		} catch (URISyntaxException e1) {
-			// TODO Auto­generated catch block
 			e1.printStackTrace();
 		} finally {
 			httpclient.close();
 		}
 		return response;
 	}
+
+	// private String CreateErrorResponse(ObjectMapper mapper) {
+	// SetErrorAttributes errorAttributes = new SetErrorAttributes("true","No
+	// data found");
+	// try {
+	// return (mapper.writeValueAsString(errorAttributes));
+	// } catch (JsonProcessingException e) {
+	// e.printStackTrace();
+	// }
+	// return null;
+	// }
 
 }

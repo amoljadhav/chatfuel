@@ -18,4 +18,8 @@ public class UserStaticData {
 	public static final String CLAIM_AMOUNT_PAYABLE = "Claim Amount Payable "+COLON+CURRENCY;
 	 
 	
+//	public static final String GET_POLICY_DETAILS_BY_POLICYNO_ERROR = "";
+//	public static final String GET_CLAIMS_DETAILS_BY_POLICYNO_ERROR = "";
+//	
+	
 }
