@@ -5,6 +5,7 @@ import java.util.List;
 
 public class API_CONST {
 
+	public static final String CHANGE_LINE = " \n ";
 	public static final String GET_POLICY = "/getpolicydetailsbypolicynumber";
 	
 	public static final String GET_CLAIM = "/getclaimdetailsbyclaimnumber";

@@ -3,6 +3,7 @@ package chatfuel.dcx.springboot.model;
 import org.json.JSONObject;
 
 import chatfuel.dcx.springboot.utils.API_CONST;
+import chatfuel.dcx.springboot.utils.UserStaticData;
 import chatfuel.dcx.springboot.utils.Utils;
 
 public class Elements {
@@ -18,7 +19,13 @@ public class Elements {
 	
 	public Elements(JSONObject jsonObject,Buttons[] buttons){
 		this.subtitle = Utils.getData(jsonObject, "Name");
-
+		
+			if(jsonObject.has("Claim_No__c") && !jsonObject.isNull("Claim_No__c")){
+				String claimNumber = Utils.getData(jsonObject, "Claim_No__c"); // Note: In case of claims, we are getting Claim_No__c as 
+				                                                               //       claimnumber while for policy number its Name
+				this.subtitle = UserStaticData.CLAIM_NUMBER+claimNumber;
+			}
+		
 		this.buttons = buttons;
 		getRandomData();
 	}
