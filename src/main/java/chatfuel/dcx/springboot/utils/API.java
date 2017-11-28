@@ -2,16 +2,16 @@ package chatfuel.dcx.springboot.utils;
 
 public class API {
 
-	public static final String USERNAME = "nabendu.chattopad@sfdc-coe.com.assetrepos";
-        public static final String PASSWORD = "S@iram01";
+	public static final String USERNAME = "";
+        public static final String PASSWORD = "";
        
        
-        public static final String HOST_NAME = "https://cs83.salesforce.com";
-        public static final String TOKEN_URL = "https://cs83.salesforce.com/services/oauth2/token";
-        public static final String CALLBACK_URL = "https://cs83.salesforce.com/auth2/callback";
+        public static final String HOST_NAME = "";
+        public static final String TOKEN_URL = "";
+        public static final String CALLBACK_URL = "";
  
-        public static final String CONSUMER_KEY = "3MVG9w8uXui2aB_rvCGZKHtAuQUv6y.qHsqKr50Syg3PpzOdDaBaIJGa3Rv8kxthu_gJPl1QlONayT5ScIVy6";
-        public static final String CONSUMER_SECRET = "2171964183736661239";
+        public static final String CONSUMER_KEY = "";
+        public static final String CONSUMER_SECRET = "";
  
        
        
